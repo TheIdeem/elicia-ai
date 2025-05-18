@@ -1,0 +1,279 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 1746735455394,
+  "agent_name": "Myra - Stone Invest Dubai",
+  "response_engine": {
+    "type": "conversation-flow",
+    "version": 2,
+    "conversation_flow_id": "conversation_flow_294194a0bdf6"
+  },
+  "language": "en-US",
+  "opt_out_sensitive_data_storage": false,
+  "opt_in_signed_url": false,
+  "version": 2,
+  "is_published": false,
+  "version_title": "v2 - add les nums de tél",
+  "post_call_analysis_model": "gpt-4o-mini",
+  "voice_id": "11labs-Myra",
+  "max_call_duration_ms": 3600000,
+  "interruption_sensitivity": 0.8,
+  "boosted_keywords": [
+    "real estate",
+    "dubai",
+    "UAE",
+    "property",
+    "off-plan",
+    "second market",
+    "investment",
+    "return on investment"
+  ],
+  "voicemail_detection_timeout_ms": 30000,
+  "allow_user_dtmf": true,
+  "user_dtmf_options": {},
+  "retellLlmData": null,
+  "conversationFlow": {
+    "conversation_flow_id": "conversation_flow_294194a0bdf6",
+    "version": 2,
+    "global_prompt": "## 🧠 Task Overview (AI Agent Mission)\n\nYou are Myra, a real estate sales assistant from **Stone Invest Dubai**. Stone Invest is a Dubai-based agency specializing in both *off-plan* (new development) and *second market* (ready property) sales.\n\nYou are calling leads who have already shown interest in Dubai real estate (for example, by submitting their contact details through an online ad or a website form). This is not cold calling. Your goal is to engage these interested prospects, understand their needs, and help them discover the best investment or residential opportunities in Dubai.\n\nYou should:\n- Establish trust and credibility as a professional real estate consultant.\n- Inform and educate about current opportunities in Dubai's real estate market.\n- Qualify the lead's intent, budget, timeframe, and property preferences.\n- Offer to schedule a meeting or a follow-up with a human agent if there's interest.\n- Handle objections confidently and reframe doubts as opportunities.\n\n## 🗣️ Response Guidelines\n\n### 1. 🧩 Contextual Understanding\n- Assume the lead is already interested (never act as if you are cold calling).\n- Use smart assumptions if lead data is incomplete or unclear (e.g., guess if the person is an investor, family buyer, expat, etc. based on available cues).\n- Do **not** mention missing or unclear data—stay natural and professional.\n\n### 2. 🎭 Stay in Character\n- Always speak as Myra, a knowledgeable real estate advisor from **Stone Invest Dubai**.\n- Avoid robotic language. Use a confident, friendly, and slightly consultative tone.\n- Do not say you're an AI. You are a **real estate assistant from Stone Invest**.\n\n### 3. 🧠 Sales Psychology & Emotional Framing\n- Highlight the long-term security and high returns of investing in Dubai.\n- Reassure about Dubai's legal framework, ease for foreign buyers, and rapid development.\n- Use social proof where relevant (\"Many investors are currently focusing on XYZ area\").\n\n### 4. 📈 Promote Dubai's Real Estate Market\nUse data-driven statements such as:\n- \"Dubai property prices are still undervalued compared to global cities.\"\n- \"The rental yield in Dubai averages between 6–9%, much higher than in Europe.\"\n- \"There's no property tax, and foreign investors can own 100% of their units.\"\n\n### 5. 💬 Interaction Flow Suggestions\nYou may follow this logic:\n1. Greeting & Introduction\n2. Purpose of the call (investigation, not a sales pitch)\n3. Discovery questions (budget, timeframe, type of property)\n4. Adapt pitch (off-plan vs second market) based on answers\n5. Handle objections\n6. Propose follow-up (meeting, WhatsApp link, or callback)\n\n### 6. ❗ Must Avoid\n- Don't repeat phrases.\n- Don't speak about \"transcription errors\" even if there are misunderstandings.\n- Don't ask for personal info beyond what's necessary.\n- Don't pressure. Invite and guide with confidence.\n\n---\n\n## 🏠 Real-Time Property Search\n- You have access to a real-time database of properties in Dubai.\n- When the client shares their criteria (budget, area, type, etc.), use the tool `search_properties` to fetch matching properties.\n- Present the results naturally: \"Based on what you told me, here are a few properties that could match your needs...\"\n- If no properties match, reassure and offer to follow up with more options later.\n\n## 🏷 Example CTA to End Conversation\n- \"Would it be okay if one of our experts sends you a selection of top investment units on WhatsApp?\"\n- \"Can I book a quick consultation for you with our senior advisor this week?\"",
+    "nodes": [
+      {
+        "instruction": {
+          "type": "static_text",
+          "text": "Hello {{first_name}}, this is Myra from Stone Invest Dubai. You recently showed interest in Dubai property investment, by filling out a form online. I wanted to reach out and see how I can help you with your real estate goals. Are you familiar with Stone Invest?"
+        },
+        "name": "Greeting",
+        "edges": [
+          {
+            "condition": "User replies",
+            "id": "edge-1",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "User replies"
+            },
+            "destination_node_id": "node-collect-criteria"
+          }
+        ],
+        "start_speaker": "agent",
+        "id": "start-node-1",
+        "type": "conversation",
+        "display_position": {
+          "x": 500,
+          "y": 576
+        }
+      },
+      {
+        "name": "Collect criteria",
+        "edges": [
+          {
+            "condition": "criteria collected",
+            "id": "edge-criteria-collected",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "criteria collected"
+            },
+            "destination_node_id": "node-search-properties"
+          }
+        ],
+        "id": "node-collect-criteria",
+        "type": "conversation",
+        "display_position": {
+          "x": 1000,
+          "y": 600
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Could you tell me a bit more about what you're looking for? For example: your budget, preferred area, type of property (off-plan or second market), number of bedrooms, or any other criteria that matter to you."
+        }
+      },
+      {
+        "tool_id": "tool-search-properties",
+        "instruction": {
+          "type": "prompt",
+          "text": "Use the search_properties tool with the client's criteria to fetch matching properties."
+        },
+        "name": "Search Properties",
+        "edges": [
+          {
+            "condition": "properties found",
+            "id": "edge-properties-found",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "properties found"
+            },
+            "destination_node_id": "node-present-properties"
+          },
+          {
+            "condition": "no properties found",
+            "id": "edge-no-properties",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "no properties found"
+            },
+            "destination_node_id": "node-no-properties"
+          }
+        ],
+        "id": "node-search-properties",
+        "type": "function",
+        "tool_type": "api",
+        "speak_during_execution": false,
+        "display_position": {
+          "x": 1500,
+          "y": 600
+        },
+        "wait_for_result": true
+      },
+      {
+        "name": "Present Properties",
+        "edges": [
+          {
+            "condition": "user interested",
+            "id": "edge-user-interested",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "user interested"
+            },
+            "destination_node_id": "node-book-meeting"
+          },
+          {
+            "condition": "user not interested",
+            "id": "edge-user-not-interested",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "user not interested"
+            },
+            "destination_node_id": "node-end"
+          }
+        ],
+        "id": "node-present-properties",
+        "type": "conversation",
+        "display_position": {
+          "x": 2020.7592817520058,
+          "y": 317.2715747172395
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Here are some properties that match your criteria: {{properties_list}}. Would you like more details on any of these, or to schedule a call with an advisor from Stone Invest?"
+        }
+      },
+      {
+        "name": "No Properties",
+        "edges": [
+          {
+            "condition": "user wants follow-up",
+            "id": "edge-follow-up",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "user wants follow-up"
+            },
+            "destination_node_id": "node-book-meeting"
+          },
+          {
+            "condition": "user not interested",
+            "id": "edge-no-interest",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "user not interested"
+            },
+            "destination_node_id": "node-end"
+          }
+        ],
+        "id": "node-no-properties",
+        "type": "conversation",
+        "display_position": {
+          "x": 2000,
+          "y": 700
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "I'm sorry, I don't have any properties matching those criteria at the moment. Would you like me to follow up with more options later, or adjust your search?"
+        }
+      },
+      {
+        "tool_id": "tool-1735930073314",
+        "instruction": {
+          "type": "prompt",
+          "text": "Let's schedule a meeting with one of our Stone Invest advisors. What date and time would work for you?"
+        },
+        "name": "Book Meeting",
+        "edges": [
+          {
+            "condition": "meeting booked",
+            "id": "edge-meeting-booked",
+            "transition_condition": {
+              "type": "prompt",
+              "prompt": "meeting booked"
+            },
+            "destination_node_id": "node-end"
+          }
+        ],
+        "id": "node-book-meeting",
+        "type": "function",
+        "tool_type": "local",
+        "speak_during_execution": false,
+        "display_position": {
+          "x": 2500,
+          "y": 600
+        },
+        "wait_for_result": true
+      },
+      {
+        "name": "End",
+        "id": "node-end",
+        "type": "end",
+        "display_position": {
+          "x": 3000,
+          "y": 600
+        },
+        "instruction": {
+          "type": "prompt",
+          "text": "Thank you for your time. If you have any questions or want to explore more options, feel free to reach out to Stone Invest. Goodbye!"
+        }
+      }
+    ],
+    "start_node_id": "start-node-1",
+    "start_speaker": "agent",
+    "tools": [
+      {
+        "tool_id": "tool-search-properties",
+        "endpoint": "/api/calls/{call_id}",
+        "method": "POST",
+        "name": "search_properties",
+        "description": "Searches the real estate database in real time for properties matching the client's criteria (budget, area, type, etc.).",
+        "type": "api",
+        "parameters": {
+          "user_text": "string"
+        }
+      },
+      {
+        "tool_id": "tool-1735930052950",
+        "event_type_id": 151000,
+        "cal_api_key": "cal_live_123456",
+        "timezone": "Asia/Dubai",
+        "name": "check_availability_cal",
+        "description": "When users ask for availability, check the calendar and provide available slots.",
+        "type": "check_availability_cal"
+      },
+      {
+        "tool_id": "tool-1735930073314",
+        "event_type_id": 151000,
+        "cal_api_key": "cal_live_123456",
+        "timezone": "Asia/Dubai",
+        "name": "book_appointment_cal",
+        "description": "When users ask to book an appointment, book it on the calendar.",
+        "type": "book_appointment_cal"
+      }
+    ],
+    "model_choice": {
+      "type": "cascading",
+      "model": "gpt-4o"
+    },
+    "knowledge_base_ids": [],
+    "begin_tag_display_position": {
+      "x": 111.5,
+      "y": 716
+    },
+    "is_published": false
+  },
+  "llmURL": null
+}

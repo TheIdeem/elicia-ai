@@ -1,0 +1,539 @@
+```
+create table public.agents (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  user_id uuid null,
+  full_name text not null,
+  email text not null,
+  phone text null,
+  position text null,
+  specialization text null,
+  bio text null,
+  avatar_url text null,
+  status text null default 'active'::text,
+  hire_date date null,
+  properties_sold integer null default 0,
+  total_sales numeric(12, 2) null default 0,
+  commission_rate numeric(5, 2) null default 10.00,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint agents_pkey primary key (id),
+  constraint agents_email_key unique (email),
+  constraint agents_user_id_fkey foreign KEY (user_id) references auth.users (id),
+  constraint agents_status_check check (
+    (
+      status = any (
+        array[
+          'active'::text,
+          'inactive'::text,
+          'on_leave'::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists idx_agents_status on public.agents using btree (status) TABLESPACE pg_default;
+
+create index IF not exists idx_agents_user_id on public.agents using btree (user_id) TABLESPACE pg_default;
+
+create trigger update_agents_updated_at BEFORE
+update on agents for EACH row
+execute FUNCTION update_updated_at_column ();
+```
+
+```
+create materialized view public.call_statistics as
+select
+  date_trunc('day'::text, c.created_at) as date,
+  count(*) as total_calls,
+  count(
+    case
+      when c.call_direction::text = 'inbound'::text then 1
+      else null::integer
+    end
+  ) as inbound_calls,
+  count(
+    case
+      when c.call_direction::text = 'outbound'::text then 1
+      else null::integer
+    end
+  ) as outbound_calls,
+  count(
+    case
+      when c.call_outcome = 'interested'::call_outcome
+      or c.call_outcome = 'meeting_scheduled'::call_outcome then 1
+      else null::integer
+    end
+  ) as positive_outcomes,
+  count(
+    case
+      when c.call_outcome = 'not_interested'::call_outcome
+      or c.call_outcome = 'do_not_call'::call_outcome then 1
+      else null::integer
+    end
+  ) as negative_outcomes,
+  avg(c.duration_seconds) as avg_duration,
+  avg(c.ai_sentiment) as avg_sentiment,
+  count(distinct c.agent_id) as active_agents,
+  count(
+    case
+      when c.call_outcome = 'callback_requested'::call_outcome then 1
+      else null::integer
+    end
+  ) as callbacks_requested
+from
+  calls_unified c
+group by
+  (date_trunc('day'::text, c.created_at));
+```
+
+```
+create table public.calls_unified (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  crm_id character varying not null,
+  lead_id uuid null,
+  call_direction character varying not null,
+  status character varying not null,
+  call_outcome public.call_outcome null,
+  start_time timestamp with time zone null,
+  end_time timestamp with time zone null,
+  duration_seconds integer null,
+  phone_number character varying null,
+  agent_id uuid null,
+  recording_url character varying null,
+  transcript text null,
+  ai_sentiment double precision null,
+  ai_summary text null,
+  notes text null,
+  callback_datetime timestamp with time zone null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  retell_agent_id text null,
+  constraint calls_unified_pkey primary key (id),
+  constraint calls_unified_agent_id_fkey foreign KEY (agent_id) references profiles (id),
+  constraint calls_unified_lead_id_fkey foreign KEY (lead_id) references leads (id),
+  constraint calls_unified_call_direction_check check (
+    (
+      (call_direction)::text = any (
+        array[
+          ('inbound'::character varying)::text,
+          ('outbound'::character varying)::text
+        ]
+      )
+    )
+  ),
+  constraint calls_unified_status_check check (
+    (
+      (status)::text = any (
+        array[
+          ('completed'::character varying)::text,
+          ('failed'::character varying)::text,
+          ('in_progress'::character varying)::text,
+          ('cancelled'::character varying)::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create trigger update_calls_unified_updated_at BEFORE
+update on calls_unified for EACH row
+execute FUNCTION update_updated_at_column ();
+```
+
+```
+create materialized view public.lead_statistics as
+select
+  date_trunc('day'::text, l.created_at) as date,
+  count(*) as total_leads,
+  avg(l.rating) as avg_rating,
+  count(
+    case
+      when l.status::text = any (
+        array[
+          'New'::character varying::text,
+          'Follow-up'::character varying::text,
+          'Interested'::character varying::text
+        ]
+      ) then 1
+      else null::integer
+    end
+  ) as active_leads,
+  count(
+    case
+      when l.status::text = 'Interested'::text then 1
+      else null::integer
+    end
+  ) as converted_leads,
+  count(
+    case
+      when l.priority::text = 'High'::text then 1
+      else null::integer
+    end
+  ) as high_priority_leads,
+  avg(l.ai_sentiment) as avg_sentiment,
+  count(distinct l.source) as lead_sources,
+  count(distinct l.property_interest) as property_interests
+from
+  leads l
+group by
+  (date_trunc('day'::text, l.created_at));
+```
+
+```
+create table public.leads (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  crm_id character varying not null,
+  name character varying not null,
+  email character varying null,
+  phone character varying not null,
+  gender character varying null,
+  location character varying null,
+  property_interest character varying null,
+  investment_type character varying null,
+  budget_range character varying null,
+  preferred_areas text[] null,
+  status character varying null,
+  priority character varying null,
+  rating integer null,
+  ai_sentiment double precision null,
+  ai_notes text null,
+  source character varying null,
+  notes text null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  agent_id uuid null,
+  constraint leads_pkey primary key (id),
+  constraint leads_crm_id_key unique (crm_id),
+  constraint leads_agent_id_fkey foreign KEY (agent_id) references profiles (id),
+  constraint leads_gender_check check (
+    (
+      (gender)::text = any (
+        array[
+          ('Male'::character varying)::text,
+          ('Female'::character varying)::text,
+          ('Other'::character varying)::text
+        ]
+      )
+    )
+  ),
+  constraint leads_investment_type_check check (
+    (
+      (investment_type)::text = any (
+        array[
+          ('Investment'::character varying)::text,
+          ('Personal Use'::character varying)::text
+        ]
+      )
+    )
+  ),
+  constraint leads_ai_sentiment_check check (
+    (
+      (ai_sentiment >= (0)::double precision)
+      and (ai_sentiment <= (1)::double precision)
+    )
+  ),
+  constraint leads_priority_check check (
+    (
+      (priority)::text = any (
+        array[
+          ('High'::character varying)::text,
+          ('Medium'::character varying)::text,
+          ('Low'::character varying)::text
+        ]
+      )
+    )
+  ),
+  constraint leads_property_interest_check check (
+    (
+      (property_interest)::text = any (
+        array[
+          ('Off-plan'::character varying)::text,
+          ('Secondary'::character varying)::text,
+          ('Both'::character varying)::text,
+          ('Unknown'::character varying)::text
+        ]
+      )
+    )
+  ),
+  constraint leads_rating_check check (
+    (
+      (rating >= 0)
+      and (rating <= 5)
+    )
+  ),
+  constraint leads_status_check check (
+    (
+      (status)::text = any (
+        array[
+          ('New'::character varying)::text,
+          ('Follow-up'::character varying)::text,
+          ('Interested'::character varying)::text,
+          ('Not Interested'::character varying)::text,
+          ('No Answer'::character varying)::text,
+          ('Callback'::character varying)::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists leads_crm_id_idx on public.leads using btree (crm_id) TABLESPACE pg_default;
+
+create index IF not exists leads_email_idx on public.leads using btree (email) TABLESPACE pg_default;
+
+create index IF not exists leads_phone_idx on public.leads using btree (phone) TABLESPACE pg_default;
+
+create index IF not exists leads_status_idx on public.leads using btree (status) TABLESPACE pg_default;
+```
+
+```
+create materialized view public.meeting_statistics as
+select
+  date_trunc('day'::text, m.created_at) as date,
+  count(*) as total_meetings,
+  count(
+    case
+      when m.status = 'scheduled'::meeting_status then 1
+      else null::integer
+    end
+  ) as scheduled_meetings,
+  count(
+    case
+      when m.status = 'completed'::meeting_status then 1
+      else null::integer
+    end
+  ) as completed_meetings,
+  count(
+    case
+      when m.status = 'cancelled'::meeting_status then 1
+      else null::integer
+    end
+  ) as cancelled_meetings,
+  avg(m.duration_minutes) as avg_duration,
+  count(distinct m.agent_id) as active_agents,
+  avg(m.ai_success_probability) as avg_success_probability,
+  avg(m.ai_engagement_score) as avg_engagement_score
+from
+  meetings m
+group by
+  (date_trunc('day'::text, m.created_at));
+```
+
+```
+create table public.meetings (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  crm_id text not null,
+  call_id text null,
+  lead_id text null,
+  meeting_type public.meeting_type not null default 'in_person'::meeting_type,
+  status public.meeting_status null default 'scheduled'::meeting_status,
+  subject text null,
+  description text null,
+  meeting_date date null,
+  meeting_time time without time zone null,
+  duration_minutes integer null default 60,
+  timezone text null default 'UTC'::text,
+  start_time timestamp with time zone null,
+  end_time timestamp with time zone null,
+  location_type public.location_type null,
+  location_address text null,
+  location_coordinates point null,
+  property_id text null,
+  property_reference text null,
+  property_type public.property_type null,
+  agent_id text null,
+  participant_name text null,
+  participant_phone text null,
+  additional_participants jsonb null,
+  reminder_sent boolean null default false,
+  confirmation_status text null,
+  cancellation_reason text null,
+  reschedule_count integer null default 0,
+  pre_meeting_notes text null,
+  post_meeting_notes text null,
+  outcome_summary text null,
+  next_steps text null,
+  ai_success_probability numeric null,
+  ai_engagement_score numeric null,
+  ai_notes jsonb null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  created_by text null,
+  last_modified_by text null,
+  constraint meetings_pkey primary key (id)
+) TABLESPACE pg_default;
+
+create index IF not exists idx_meetings_agent on public.meetings using btree (agent_id) TABLESPACE pg_default;
+
+create index IF not exists idx_meetings_crm_id on public.meetings using btree (crm_id) TABLESPACE pg_default;
+
+create index IF not exists idx_meetings_date on public.meetings using btree (meeting_date) TABLESPACE pg_default;
+
+create index IF not exists idx_meetings_lead on public.meetings using btree (lead_id) TABLESPACE pg_default;
+
+create index IF not exists idx_meetings_status on public.meetings using btree (status) TABLESPACE pg_default;
+
+create trigger update_meeting_timestamp BEFORE
+update on meetings for EACH row
+execute FUNCTION update_meeting_timestamp ();
+```
+
+```
+create table public.notifications (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  meeting_id uuid null,
+  notification_type public.notification_type not null,
+  status public.notification_status null default 'pending'::notification_status,
+  scheduled_time timestamp with time zone not null,
+  phone_number text not null,
+  message_template text not null,
+  message_variables jsonb null,
+  sent_time timestamp with time zone null,
+  error_message text null,
+  retry_count integer null default 0,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint notifications_pkey primary key (id),
+  constraint notifications_meeting_id_fkey foreign KEY (meeting_id) references meetings (id)
+) TABLESPACE pg_default;
+
+create index IF not exists idx_notifications_meeting on public.notifications using btree (meeting_id) TABLESPACE pg_default;
+
+create index IF not exists idx_notifications_pending on public.notifications using btree (scheduled_time) TABLESPACE pg_default
+where
+  (status = 'pending'::notification_status);
+
+create index IF not exists idx_notifications_scheduled on public.notifications using btree (scheduled_time) TABLESPACE pg_default;
+
+create index IF not exists idx_notifications_status on public.notifications using btree (status) TABLESPACE pg_default;
+```
+
+```
+create table public.profiles (
+  id uuid not null,
+  full_name text null,
+  avatar_url text null,
+  phone_number text null,
+  is_active boolean null default true,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  role public.user_role null,
+  constraint profiles_pkey primary key (id),
+  constraint profiles_id_fkey foreign KEY (id) references auth.users (id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create index IF not exists idx_profiles_active on public.profiles using btree (is_active) TABLESPACE pg_default;
+```
+
+```
+create table public.properties (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  reference text not null,
+  type public.property_type not null,
+  status public.property_status null default 'available'::property_status,
+  title text not null,
+  description text null,
+  address text not null,
+  location_coordinates point null,
+  price numeric(12, 2) not null,
+  size_sqm numeric(8, 2) null,
+  bedrooms smallint null,
+  bathrooms smallint null,
+  parking_spots smallint null,
+  year_built smallint null,
+  features jsonb null,
+  images text[] null,
+  documents text[] null,
+  agent_id uuid null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  created_by uuid null,
+  last_modified_by uuid null,
+  constraint properties_pkey primary key (id),
+  constraint properties_reference_key unique (reference)
+) TABLESPACE pg_default;
+
+create index IF not exists idx_properties_agent on public.properties using btree (agent_id) TABLESPACE pg_default;
+
+create index IF not exists idx_properties_price on public.properties using btree (price) TABLESPACE pg_default;
+
+create index IF not exists idx_properties_status on public.properties using btree (status) TABLESPACE pg_default;
+
+create index IF not exists idx_properties_type on public.properties using btree (type) TABLESPACE pg_default;
+```
+
+```
+create materialized view public.property_statistics as
+select
+  date_trunc('day'::text, p.created_at) as date,
+  count(*) as total_properties,
+  count(
+    case
+      when p.status = 'available'::property_status then 1
+      else null::integer
+    end
+  ) as available_properties,
+  count(
+    case
+      when p.status = 'sold'::property_status then 1
+      else null::integer
+    end
+  ) as sold_properties,
+  count(
+    case
+      when p.status = 'pending'::property_status then 1
+      else null::integer
+    end
+  ) as pending_properties,
+  avg(p.price) as avg_price,
+  count(distinct p.type) as property_types,
+  count(distinct p.agent_id) as active_agents,
+  avg(p.size_sqm) as avg_size
+from
+  properties p
+group by
+  (date_trunc('day'::text, p.created_at));
+```
+
+```
+create table public.retell_agents (
+  id serial not null,
+  retell_id text not null,
+  name text not null,
+  description text null,
+  voice_id text null,
+  llm_model text null,
+  is_active boolean null default true,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint retell_agents_pkey primary key (id),
+  constraint retell_agents_retell_id_key unique (retell_id)
+) TABLESPACE pg_default;
+
+create index IF not exists idx_retell_agents_retell_id on public.retell_agents using btree (retell_id) TABLESPACE pg_default;
+```
+
+```
+create materialized view public.upcoming_meetings as
+select
+  m.id,
+  m.crm_id,
+  m.meeting_type,
+  m.status,
+  m.meeting_date,
+  m.meeting_time,
+  m.location_type,
+  m.location_address,
+  m.agent_id,
+  m.participant_name,
+  m.participant_phone
+from
+  meetings m
+where
+  m.meeting_date >= CURRENT_DATE
+  and m.status = 'scheduled'::meeting_status
+order by
+  m.meeting_date,
+  m.meeting_time;
+```

@@ -1,0 +1,22 @@
+{
+    "event": "call_ended",
+    "call": {
+      "call_id": "b7e6e2c2-1c2b-4e2a-9c2b-123456789abc",
+      "customer_name": "John DoeWebhook",
+      "customer_phone_number": "+1234567890",
+      "status": "completed",
+      "direction": "outbound",
+      "created_at": "2024-06-01T12:00:00Z",
+      "duration": 180,
+      "agent_id": "b7e6e2c2-1c2b-4e2a-9c2b-123456789def",
+      "transcript": "Hello, this is a test call.",
+      "transcript_object": [
+        { "speaker": "agent", "text": "Hello!", "timestamp": 0 },
+        { "speaker": "customer", "text": "Hi!", "timestamp": 2000 }
+      ],
+      "purpose": "Demo call",
+      "summary": "Short summary",
+      "user_sentiment": 0.8,
+      "successful": true
+    }
+  }

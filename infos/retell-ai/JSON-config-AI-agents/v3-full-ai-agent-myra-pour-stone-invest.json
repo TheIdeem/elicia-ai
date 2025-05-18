@@ -1,0 +1,126 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \{\
+  "agent_name": "Myra - Stone Invest",\
+  "language": "en-US",\
+  "voice_id": "11labs-Myra",\
+  "version": 1,\
+  "channel": "voice",\
+  "conversation_flows": [\
+    \{\
+      "conversation_flow_id": "conversation_flow_stoneinvest_ready",\
+      "version": 1,\
+      "nodes": [\
+        \{\
+          "id": "node-intro",\
+          "name": "Introduction",\
+          "type": "conversation",\
+          "start_speaker": "agent",\
+          "instruction": \{\
+            "type": "static_text",\
+            "text": "Hi \{\{first_name\}\}, this is Myra from Stone Invest, a Dubai-based real estate agency. We specialize in both off-plan and ready properties offering high investment potential. You recently showed interest in real estate opportunities here in Dubai, so I wanted to connect with you and learn more about your goals. Do you have a moment to talk?"\
+          \},\
+          "edges": [\
+            \{\
+              "condition": "user says yes",\
+              "transition_condition": \{\
+                "type": "keyword",\
+                "keywords": ["yes", "sure", "okay", "alright"]\
+              \},\
+              "destination_node_id": "node-qualify-goal"\
+            \},\
+            \{\
+              "condition": "user says no",\
+              "transition_condition": \{\
+                "type": "keyword",\
+                "keywords": ["no", "not now", "busy"]\
+              \},\
+              "destination_node_id": "node-reschedule"\
+            \}\
+          ]\
+        \},\
+        \{\
+          "id": "node-reschedule",\
+          "name": "Reschedule",\
+          "type": "conversation",\
+          "instruction": \{\
+            "type": "static_text",\
+            "text": "No problem! I can send you a link to schedule a call at your convenience or have one of our agents reach out later. What works best for you?"\
+          \},\
+          "edges": []\
+        \},\
+        \{\
+          "id": "node-qualify-goal",\
+          "name": "Qualify Goal",\
+          "type": "conversation",\
+          "instruction": \{\
+            "type": "prompt",\
+            "text": "Great! May I ask \'97 are you looking to invest for rental income, long-term appreciation, or are you planning to live in the property?"\
+          \},\
+          "edges": [\
+            \{\
+              "condition": "Rental income",\
+              "transition_condition": \{\
+                "type": "keyword",\
+                "keywords": ["rental", "income", "ROI", "rent"]\
+              \},\
+              "destination_node_id": "node-rental-options"\
+            \},\
+            \{\
+              "condition": "Live in",\
+              "transition_condition": \{\
+                "type": "keyword",\
+                "keywords": ["live", "myself", "move", "relocate"]\
+              \},\
+              "destination_node_id": "node-livein-options"\
+            \},\
+            \{\
+              "condition": "Investment",\
+              "transition_condition": \{\
+                "type": "keyword",\
+                "keywords": ["invest", "appreciation", "value"]\
+              \},\
+              "destination_node_id": "node-invest-options"\
+            \}\
+          ]\
+        \},\
+        \{\
+          "id": "node-rental-options",\
+          "name": "Rental Focus",\
+          "type": "conversation",\
+          "instruction": \{\
+            "type": "static_text",\
+            "text": "Perfect, Dubai has some of the highest rental yields globally. We have off-plan properties starting at great entry prices with projected ROIs above 8%. Would you like me to connect you with one of our investment specialists?"\
+          \},\
+          "edges": []\
+        \},\
+        \{\
+          "id": "node-livein-options",\
+          "name": "Live-In Focus",\
+          "type": "conversation",\
+          "instruction": \{\
+            "type": "static_text",\
+            "text": "That\'92s exciting! We have great residential communities that balance comfort and amenities \'97 including schools, shopping, and parks. Would you prefer a ready-to-move-in property or something under construction?"\
+          \},\
+          "edges": []\
+        \},\
+        \{\
+          "id": "node-invest-options",\
+          "name": "Appreciation Focus",\
+          "type": "conversation",\
+          "instruction": \{\
+            "type": "static_text",\
+            "text": "Fantastic \'97 the Dubai market is growing fast, especially in developing areas. We can show you properties in zones with planned infrastructure and capital growth potential. Would you like to get some listings via WhatsApp or email?"\
+          \},\
+          "edges": []\
+        \}\
+      ]\
+    \}\
+  ]\
+\}\
+}

@@ -21,6 +21,22 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Add general text color classes */
+
+/* .text-primary {
+  color: var(--foreground);
+}   */
+
+/* Ensure form elements have proper text color */
+input, select, textarea {
+  color: #171717;
+}
+
+/* Explicitly set button text color to white */
+button {
+  color: rgb(255, 255, 255);
 }

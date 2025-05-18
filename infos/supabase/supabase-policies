@@ -1,0 +1,217 @@
+[**agents**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17804)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on agents
+
+Applied to: `authenticated` role
+
+UPDATE
+
+Agents can update their own profile
+
+Applied to: `authenticated` role
+
+SELECT
+
+Agents can view all agents
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_agents_policy
+
+Applied to: `authenticated` role
+
+[**calls_unified**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17817)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on calls
+
+Applied to: `authenticated` role
+
+ALL
+
+Agents can manage their own calls
+
+Applied to: `authenticated` role
+
+DELETE
+
+delete_calls_policy
+
+Applied to: `authenticated` role
+
+INSERT
+
+insert_calls_policy
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_calls_policy
+
+Applied to: `authenticated` role
+
+UPDATE
+
+update_calls_policy
+
+Applied to: `authenticated` role
+
+[**leads**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17834)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on leads
+
+Applied to: `authenticated` role
+
+ALL
+
+Agents can view and edit their assigned leads
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_leads_policy
+
+Applied to: `authenticated` role
+
+[**meetings**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17856)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on meetings
+
+Applied to: `authenticated` role
+
+ALL
+
+Agents can manage their own meetings
+
+Applied to: `authenticated` role
+
+INSERT
+
+insert_meetings_policy
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_meetings_policy
+
+Applied to: `authenticated` role
+
+UPDATE
+
+update_meetings_policy
+
+Applied to: `authenticated` role
+
+[**notifications**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17877)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on notifications
+
+Applied to: `authenticated` role
+
+SELECT
+
+Agents can view their related notifications
+
+Applied to: `authenticated` role
+
+[**profiles**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17887)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can manage all profiles
+
+Applied to: `authenticated` role
+
+UPDATE
+
+Users can update their own profile
+
+Applied to: `authenticated` role
+
+SELECT
+
+Users can view all profiles
+
+Applied to: `authenticated` role
+
+[**properties**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17895)
+
+Disable RLSCreate policy
+
+ALL
+
+Admins can do everything on properties
+
+Applied to: `authenticated` role
+
+UPDATE
+
+Agents can manage their assigned properties
+
+Applied to: `authenticated` role
+
+SELECT
+
+Agents can view all properties
+
+Applied to: `authenticated` role
+
+INSERT
+
+insert_properties_policy
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_properties_policy
+
+Applied to: `authenticated` role
+
+UPDATE
+
+update_properties_policy
+
+Applied to: `authenticated` role
+
+[**retell_agents**](https://supabase.com/dashboard/project/dyzsbidpeegedytahtjx/editor/17911)
+
+Disable RLSCreate policy
+
+ALL
+
+manage_retell_agents_policy
+
+Applied to: `authenticated` role
+
+SELECT
+
+read_retell_agents_policy
+
+Applied to: `authenticated` role
