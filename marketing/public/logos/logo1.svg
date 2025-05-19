@@ -1,0 +1,4 @@
+<svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 10h20v30h-20z" fill="#ECEAF4" fillOpacity="0.6"/>
+  <text x="50" y="32" fill="#ECEAF4" fillOpacity="0.6" fontFamily="Inter" fontSize="24" fontWeight="bold">Enterprise</text>
+</svg> 

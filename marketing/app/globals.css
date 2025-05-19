@@ -2,6 +2,163 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Geist', 'Inter', 'Segoe UI', 'Arial', sans-serif;
+:root {
+  --navbar-height: 4rem;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .container-fluid {
+    @apply px-4 md:px-8 lg:px-12 mx-auto max-w-screen-2xl;
+  }
+
+  .container-dark {
+    @apply bg-bg1 text-w1;
+  }
+
+  .container-light {
+    @apply bg-w1 text-bg1;
+  }
+
+  .container-dark-borders {
+    @apply bg-bg1 text-w1 border-y border-border/10;
+  }
+
+  .section-x {
+    @apply px-4 md:px-8 lg:px-12;
+  }
+
+  .section-y {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+}
+
+@layer utilities {
+  .text-shadow-heading {
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .text-shadow-highlight {
+    text-shadow: 0px 2px 8px rgba(101, 62, 232, 0.24);
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Typography */
+.display {
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold leading-tight;
+}
+
+.large-title {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-tight;
+}
+
+.title-1 {
+  @apply text-2xl md:text-3xl font-bold leading-tight;
+}
+
+.title-2 {
+  @apply text-xl md:text-2xl font-semibold leading-tight;
+}
+
+.subtitle {
+  @apply text-lg font-medium leading-normal;
+}
+
+.body {
+  @apply text-base leading-relaxed;
+}
+
+.caption {
+  @apply text-sm leading-normal;
+}
+
+.caption-cta {
+  @apply text-sm font-medium leading-none;
+}
+
+/* Animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes accordion-down-custom {
+  from {
+    height: var(--acc-custom-height);
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up-custom {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: var(--acc-custom-height);
+  }
+}
+
+.animate-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-out {
+  animation: fade-out 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 } 
