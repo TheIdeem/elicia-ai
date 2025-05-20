@@ -1,0 +1,28 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0F0D1B"/>
+  
+  {/* Analytics Dashboard */}
+  <rect x="100" y="100" width="1000" height="600" rx="12" fill="#1A1729"/>
+  
+  {/* Charts */}
+  <rect x="140" y="140" width="280" height="200" rx="8" fill="#252134"/>
+  <path d="M160 300 L220 260 L280 280 L340 220 L400 240" stroke="#653EE8" strokeWidth="2" fill="none"/>
+  
+  <rect x="460" y="140" width="280" height="200" rx="8" fill="#252134"/>
+  <circle cx="600" cy="240" r="60" stroke="#653EE8" strokeWidth="20" strokeDasharray="251.2 377" transform="rotate(-90 600 240)"/>
+  
+  <rect x="780" y="140" width="280" height="200" rx="8" fill="#252134"/>
+  <rect x="800" y="280" width="40" height="40" fill="#653EE8" fillOpacity="0.2"/>
+  <rect x="860" y="240" width="40" height="80" fill="#653EE8" fillOpacity="0.4"/>
+  <rect x="920" y="200" width="40" height="120" fill="#653EE8" fillOpacity="0.6"/>
+  <rect x="980" y="160" width="40" height="160" fill="#653EE8" fillOpacity="0.8"/>
+  
+  {/* Data Table */}
+  <rect x="140" y="380" width="920" height="280" rx="8" fill="#252134"/>
+  <line x1="140" y1="420" x2="1060" y2="420" stroke="#ECEAF4" strokeOpacity="0.1"/>
+  <line x1="140" y1="460" x2="1060" y2="460" stroke="#ECEAF4" strokeOpacity="0.1"/>
+  <line x1="140" y1="500" x2="1060" y2="500" stroke="#ECEAF4" strokeOpacity="0.1"/>
+  <line x1="140" y1="540" x2="1060" y2="540" stroke="#ECEAF4" strokeOpacity="0.1"/>
+  <line x1="140" y1="580" x2="1060" y2="580" stroke="#ECEAF4" strokeOpacity="0.1"/>
+  <line x1="140" y1="620" x2="1060" y2="620" stroke="#ECEAF4" strokeOpacity="0.1"/>
+</svg> 

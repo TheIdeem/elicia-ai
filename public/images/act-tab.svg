@@ -1,0 +1,43 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0F0D1B"/>
+  
+  {/* Automation Interface */}
+  <rect x="100" y="100" width="1000" height="600" rx="12" fill="#1A1729"/>
+  
+  {/* Workflow Builder */}
+  <rect x="140" y="140" width="300" height="520" rx="8" fill="#252134"/>
+  
+  {/* Nodes */}
+  <rect x="160" y="180" width="260" height="80" rx="8" fill="#653EE8" fillOpacity="0.1"/>
+  <circle cx="200" cy="220" r="16" fill="#653EE8"/>
+  
+  <rect x="160" y="300" width="260" height="80" rx="8" fill="#653EE8" fillOpacity="0.1"/>
+  <circle cx="200" cy="340" r="16" fill="#653EE8"/>
+  
+  <rect x="160" y="420" width="260" height="80" rx="8" fill="#653EE8" fillOpacity="0.1"/>
+  <circle cx="200" cy="460" r="16" fill="#653EE8"/>
+  
+  {/* Connector Lines */}
+  <line x1="200" y1="236" x2="200" y2="324" stroke="#653EE8" strokeWidth="2" strokeDasharray="4 4"/>
+  <line x1="200" y1="356" x2="200" y2="444" stroke="#653EE8" strokeWidth="2" strokeDasharray="4 4"/>
+  
+  {/* Preview Panel */}
+  <rect x="480" y="140" width="580" height="520" rx="8" fill="#252134"/>
+  
+  {/* Calendar */}
+  <rect x="500" y="180" width="540" height="320" rx="8" fill="#1A1729"/>
+  <rect x="520" y="220" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="640" y="220" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="760" y="220" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="880" y="220" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  
+  <rect x="520" y="300" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="640" y="300" width="100" height="60" rx="4" fill="#653EE8"/>
+  <rect x="760" y="300" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="880" y="300" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  
+  <rect x="520" y="380" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="640" y="380" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="760" y="380" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+  <rect x="880" y="380" width="100" height="60" rx="4" fill="#653EE8" fillOpacity="0.1"/>
+</svg> 

@@ -45,3 +45,11 @@ yarn-error.log*
 next-env.d.ts
 marketing/.next/trace
 marketing/.next/build-manifest.json
+marketing/.next/trace
+marketing/.next/trace
+marketing/.next/app-build-manifest.json
+
+
+#webdesign
+webdesign/
+webdesign
