@@ -1,4 +1,4 @@
-// File: /Users/mehdi/Downloads/Buzz MED/PROJETS IA - CURSOR+CGTP+V0/PWC - Projets avec Colin/PWC 0 - Tool IA Calling/Elicia AI/BACKUPS/elicia-client-bckp1/marketing/app/layout.tsx
+// File: /workspace/marketing/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

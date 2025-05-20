@@ -1,4 +1,4 @@
-// File: /Users/mehdi/Downloads/Buzz MED/PROJETS IA - CURSOR+CGTP+V0/PWC - Projets avec Colin/PWC 0 - Tool IA Calling/Elicia AI/BACKUPS/elicia-client-bckp1/marketing/app/api/demo-request/route.ts
+// File: /workspace/marketing/app/api/demo-request/route.ts
 import * as entry from '../../../../../app/api/demo-request/route.js'
 import type { NextRequest } from 'next/server.js'
 
