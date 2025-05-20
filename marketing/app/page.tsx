@@ -27,18 +27,6 @@ const howItWorks = [
     description: 'Act on insights. Automate onboarding, migrations, and incident response with AI-powered workflows.',
     image: '/images/act-tab.svg',
   },
-  {
-    title: 'Build',
-    icon: '/icons/act.svg',
-    description: 'Build with confidence. Enforce best practices and accelerate delivery with self-service tools.',
-    image: '/images/act-tab.svg',
-  },
-  {
-    title: 'Measure',
-    icon: '/icons/assess.svg',
-    description: 'Measure impact. Track productivity, reliability, and business outcomes in real time.',
-    image: '/images/assess-tab.svg',
-  },
 ];
 
 const benefits = [
@@ -77,42 +65,42 @@ export default function LandingPage() {
   return (
     <main className="bg-bg1 text-w1">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-p1 to-p2 py-24 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-w1">Your Portal to Engineering Excellence</h1>
-          <p className="text-xl mb-8 text-w2">
-            Elicia AI is the enterprise-grade AI assistant built to accelerate your path to engineering excellence. Abstract away complexity, ensure ownership, enforce standards, and unlock developer self-service.
-          </p>
+      <section className="relative flex flex-col items-center justify-center min-h-[80vh] py-24 bg-gradient-to-br from-p1 to-p2 text-center overflow-hidden">
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none">
+          <Image src="/images/hero.svg" alt="Elicia AI Interface" width={900} height={500} className="opacity-90 drop-shadow-2xl" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h1 className="display font-bold mb-6 text-w1 text-shadow-heading">Your Portal to Engineering Excellence</h1>
+          <p className="text-xl mb-8 text-w2 text-balance">Elicia AI is the enterprise-grade AI assistant built to accelerate your path to engineering excellence. Abstract away complexity, ensure ownership, enforce standards, and unlock developer self-service.</p>
           <div className="flex flex-col md:flex-row justify-center gap-4 mb-10">
             <Link href="/demo-request">
-              <button className="px-8 py-4 rounded-full bg-p1 hover:bg-p2 text-white font-semibold text-lg transition duration-200">Book a live demo</button>
+              <button className="px-8 py-4 rounded-full bg-p1 hover:bg-p2 text-white font-semibold text-lg transition duration-200 shadow-lg">Book a live demo</button>
             </Link>
             <Link href="/try-now">
               <button className="px-8 py-4 rounded-full border border-w1 text-w1 font-semibold text-lg hover:bg-w1 hover:text-p1 transition duration-200">Try now</button>
             </Link>
           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-8 items-center opacity-80 mb-8">
-          {logos.map((logo, i) => (
-            <Image key={i} src={logo.src} alt={logo.alt} width={120} height={40} />
-          ))}
-        </div>
-        <div className="flex justify-center">
-          <Image src="/images/hero.svg" alt="Elicia AI Interface" width={800} height={400} className="rounded-2xl shadow-xl border border-batch-bg" />
+        <div className="relative z-10 w-full max-w-4xl mx-auto mt-8">
+          <div className="flex flex-wrap justify-center gap-8 items-center opacity-80">
+            {logos.map((logo, i) => (
+              <Image key={i} src={logo.src} alt={logo.alt} width={120} height={40} className="object-contain" />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* How it works */}
       <section className="py-24 bg-bg2">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">How it works</h2>
-          <div className="grid md:grid-cols-5 gap-8">
+          <h2 className="large-title text-center mb-16">How it works</h2>
+          <div className="grid md:grid-cols-3 gap-8">
             {howItWorks.map((step, i) => (
-              <div key={i} className="flex flex-col items-center text-center bg-bg3 rounded-xl p-6 shadow-md">
+              <div key={i} className="flex flex-col items-center text-center bg-bg3 rounded-xl p-8 shadow-md hover:scale-105 transition-transform">
                 <Image src={step.icon} alt={step.title} width={40} height={40} className="mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <h3 className="title-2 mb-2">{step.title}</h3>
                 <p className="text-w2 mb-4 text-sm">{step.description}</p>
-                <Image src={step.image} alt={step.title + ' illustration'} width={120} height={80} className="rounded" />
+                <Image src={step.image} alt={step.title + ' illustration'} width={220} height={120} className="rounded" />
               </div>
             ))}
           </div>
@@ -122,7 +110,7 @@ export default function LandingPage() {
       {/* Benefits */}
       <section className="py-24 bg-bg1">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Measurable benefits</h2>
+          <h2 className="large-title text-center mb-16">Measurable benefits</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {benefits.map((b, i) => (
               <div key={i} className="text-center">
@@ -137,11 +125,11 @@ export default function LandingPage() {
       {/* Use Cases */}
       <section className="py-24 bg-bg2">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Use cases</h2>
+          <h2 className="large-title text-center mb-16">Use cases</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {useCases.map((uc, i) => (
-              <div key={i} className="bg-bg3 rounded-xl p-8 shadow-md">
-                <h3 className="text-xl font-semibold mb-2">{uc.title}</h3>
+              <div key={i} className="bg-bg3 rounded-xl p-8 shadow-md hover:scale-105 transition-transform">
+                <h3 className="title-2 mb-2">{uc.title}</h3>
                 <p className="text-w2 text-sm">{uc.desc}</p>
               </div>
             ))}
@@ -152,7 +140,7 @@ export default function LandingPage() {
       {/* Testimonials */}
       <section className="py-24 bg-bg1">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">What our customers say</h2>
+          <h2 className="large-title text-center mb-16">What our customers say</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {testimonials.map((t, i) => (
               <div key={i} className="bg-bg2 rounded-xl p-8 shadow-md flex flex-col items-center text-center">
@@ -169,55 +157,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* Footer enrichi */}
-      <footer className="bg-bg2 border-t border-border/10 py-16 mt-12">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div>
-            <h4 className="font-semibold mb-4">Product</h4>
-            <ul className="space-y-2 text-w2">
-              <li><Link href="/features">Features</Link></li>
-              <li><Link href="/pricing">Pricing</Link></li>
-              <li><Link href="/security">Security</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Solutions</h4>
-            <ul className="space-y-2 text-w2">
-              <li><Link href="/use-cases">Use Cases</Link></li>
-              <li><Link href="/docs">Docs</Link></li>
-              <li><Link href="/blog">Blog</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2 text-w2">
-              <li><Link href="/help">Help Center</Link></li>
-              <li><Link href="/api">API</Link></li>
-              <li><Link href="/status">Status</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-2 text-w2">
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/careers">Careers</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-w2">
-              <li><Link href="/privacy">Privacy</Link></li>
-              <li><Link href="/terms">Terms</Link></li>
-              <li><Link href="/security">Security</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="border-t border-border/10 mt-12 pt-8 text-center text-w2">
-          © {new Date().getFullYear()} Elicia AI. All rights reserved.
-        </div>
-      </footer>
     </main>
   );
 } 
