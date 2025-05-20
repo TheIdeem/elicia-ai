@@ -10,9 +10,9 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
-marketing/node_modules/
-marketing/.next/
-marketing/.env
+marketing/node_modules/*
+marketing/.next/*
+marketing/.env/*
 
 # testing
 /coverage
