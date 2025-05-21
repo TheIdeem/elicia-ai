@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { createPortal } from 'react-dom';
